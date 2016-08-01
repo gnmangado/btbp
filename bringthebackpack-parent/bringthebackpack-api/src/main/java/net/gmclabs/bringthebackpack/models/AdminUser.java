@@ -1,4 +1,4 @@
-package net.gmclabs.bringthebackpack.persistence.models;
+package net.gmclabs.bringthebackpack.models;
 
 public class AdminUser {
 
