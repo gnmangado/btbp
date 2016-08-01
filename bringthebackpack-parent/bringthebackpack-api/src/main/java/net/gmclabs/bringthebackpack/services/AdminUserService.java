@@ -3,17 +3,17 @@ package net.gmclabs.bringthebackpack.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.gmclabs.bringthebackpack.persistence.mappers.AdminUserMapper;
-import net.gmclabs.bringthebackpack.persistence.models.AdminUser;
+import net.gmclabs.bringthebackpack.models.AdminUser;
+import net.gmclabs.bringthebackpack.persistence.mappers.AdminUserDao;
 
 @Service
 public class AdminUserService {
 
 	@Autowired
-	private AdminUserMapper adminUserMapper;
+	private AdminUserDao adminUserMapper;
 
-	public AdminUser getAdminUserById(Integer id) {
-		return adminUserMapper.getUser(id);
-	}
+//	public AdminUser getAdminUserById(Integer id) {
+//		return adminUserMapper.getAdminUser(id);
+//	}
 
 }

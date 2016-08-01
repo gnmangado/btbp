@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.gmclabs.bringthebackpack.persistence.mappers.ContinentDao">
+
+    <!-- result maps -->
+    <resultMap id="continentWithMainMediaMap" type="Continent">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="latitude" property="geolocation.latitude" />
+        <result column="longitude" property="geolocation.longitude" />
+
+        <association property="mainImage" column="i_id" javaType="Image">
+            <result column="i_id" property="id" />
+            <result column="i_display_name" property="displayName" />
+            <result column="i_alt_text" property="altText" />
+            <result column="i_description" property="description" />
+            <result column="i_url" property="url" />
+            <result column="i_thumb_url" property="thumbUrl" />
+            <result column="i_main" property="isMain" />
+        </association>
+
+        <association property="mainVideo" column="v_id" javaType="Video">
+            <result column="v_id" property="id" />
+            <result column="v_display_name" property="displayName" />
+            <result column="v_alt_text" property="altText" />
+            <result column="v_description" property="description" />
+            <result column="v_url" property="url" />
+            <result column="v_thumb_url" property="thumbUrl" />
+            <result column="v_main" property="isMain" />
+        </association>
+    </resultMap>
+
+    <resultMap id="continentNoMediaMap" type="Continent">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="latitude" property="geolocation.latitude" />
+        <result column="longitude" property="geolocation.longitude" />
+    </resultMap>
+
+    <select id="getAllContinents" resultMap="continentWithMainMediaMap">
+
+        SELECT
+        c.id,
+        c.name,
+        c.latitude,
+        c.longitude,
+        ci.continent_id,
+        ci.image_id,
+        i.id AS i_id,
+        i.display_name AS i_display_name,
+        i.alt_text AS i_alt_text,
+        i.description AS i_description,
+        i.url AS i_url,
+        i.thumb_url AS i_thumb_url,
+        i.main AS i_main,
+        v.id AS v_id,
+        v.display_name AS v_display_name,
+        v.alt_text AS v_alt_text,
+        v.description AS v_description,
+        v.url AS
+        v_url,
+        v.thumb_url AS v_thumb_url,
+        v.main AS v_main
+        FROM continent c
+        LEFT JOIN continent_has_image ci ON c.id = ci.continent_id
+        LEFT JOIN
+        image i ON ci.image_id = i.id
+        LEFT JOIN continent_has_video cv ON c.id = cv.continent_id
+        LEFT JOIN video v ON cv.video_id = v.id
+        WHERE
+        v.main = TRUE OR v.main IS NULL
+    </select>
+
+    <select id="getContinentById" resultMap="continentWithMainMediaMap">
+
+        SELECT
+        c.id,
+        c.name,
+        c.latitude,
+        c.longitude,
+        ci.continent_id,
+        ci.image_id,
+        i.id AS i_id,
+        i.display_name AS i_display_name,
+        i.alt_text AS i_alt_text,
+        i.description AS i_description,
+        i.url AS i_url,
+        i.thumb_url AS i_thumb_url,
+        i.main AS i_main,
+        v.id AS v_id,
+        v.display_name AS v_display_name,
+        v.alt_text AS v_alt_text,
+        v.description AS v_description,
+        v.url AS
+        v_url,
+        v.thumb_url AS v_thumb_url,
+        v.main AS v_main
+        FROM continent c
+        LEFT JOIN continent_has_image ci ON c.id = ci.continent_id
+        LEFT JOIN
+        image i ON ci.image_id = i.id
+        LEFT JOIN continent_has_video cv ON c.id = cv.continent_id
+        LEFT JOIN video v ON cv.video_id = v.id
+        WHERE
+        (v.main = TRUE OR v.main IS NULL)
+        AND c.id = #{id}
+    </select>
+
+    <insert id="insertContinent" useGeneratedKeys="true" keyProperty="continent.id" >
+        INSERT INTO continent (name, latitude, longitude)
+        VALUES (#{continent.name}, #{continent.geolocation.latitude}, #{continent.geolocation.longitude})
+    </insert>
+
+    <delete id="deleteContinent">
+        DELETE FROM continent WHERE id = #{id}
+    </delete>
+</mapper>

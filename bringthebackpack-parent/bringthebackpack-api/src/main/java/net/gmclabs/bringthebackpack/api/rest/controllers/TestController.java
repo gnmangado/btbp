@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import net.gmclabs.bringthebackpack.persistence.mappers.AdminUserMapper;
-import net.gmclabs.bringthebackpack.persistence.models.AdminUser;
+import net.gmclabs.bringthebackpack.models.AdminUser;
+import net.gmclabs.bringthebackpack.persistence.mappers.AdminUserDao;
 
 @Controller
 @RequestMapping("/test")
@@ -22,13 +22,13 @@ public class TestController {
 	static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
 	@Autowired
-	private AdminUserMapper adminUserMapper;
+	private AdminUserDao adminUserDao;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody List<String> getTests(@RequestParam(value = "name", required = false) String name) {
 		logger.info("Test controller executed");
 		try {
-			AdminUser adminUser = adminUserMapper.getUser(1);
+			AdminUser adminUser = adminUserDao.getAdminUser(1, "gmangado");
 			logger.info(adminUser.toString());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

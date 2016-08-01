@@ -11,7 +11,7 @@
 
     <mvc:annotation-driven />
 
-    <context:component-scan base-package="net.gmclabs.bringthebackpack.api.rest.controllers" />
+    <context:component-scan base-package="net.gmclabs.bringthebackpack.api.rest.controllers, net.gmclabs.bringthebackpack.services" />
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="defaultContentType" value="application/json" />

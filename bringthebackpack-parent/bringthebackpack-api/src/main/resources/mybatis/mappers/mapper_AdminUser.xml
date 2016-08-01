@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.gmclabs.bringthebackpack.persistence.mappers.AdminUserDao">
+
+    <!-- result maps -->
+    <resultMap id="adminUserMap" type="AdminUser">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="first_name" property="firstName" />
+        <result column="last_name" property="lastName" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+    </resultMap>
+
+    <select id="getAdminUser" resultMap="adminUserMap">
+        SELECT id,
+            username,
+            first_name,
+            last_name,
+            password,
+            email
+        FROM admin_user 
+        WHERE 
+            id = #{id} AND 
+            username = #{username}
+    </select>
+    
+</mapper>

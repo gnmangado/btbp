@@ -26,12 +26,13 @@
     <!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis/config/mybatis_config.xml" />
     </bean>
 
-    <bean id="adminUserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="net.gmclabs.bringthebackpack.persistence.mappers.AdminUserMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
+    <!-- TODO Exception translation is not working. -->
+<!--     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!--         <constructor-arg index="0" ref="sqlSessionFactory" /> -->
+<!--     </bean> -->
 
     <!-- Allow spring to translate data access exceptions to specialized exceptions. -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
@@ -41,10 +42,24 @@
 
     <!-- Turn on spring's annotation wiring and also auto register spring beans using the base package scan -->
     <!-- Classes annotated with the following are registered automatically as beans: @Component, @Controller, @Repository, @Service -->
-<!--     <context:component-scan base-package="net.gmclabs.bringthebackpack.persistence.mappers" /> -->
+    <!-- <context:component-scan base-package="net.gmclabs.bringthebackpack.services" /> -->
 
     <!-- Turn on annotation driven transactions: allow usage of @Transactional at class and method level. -->
     <!-- Per documentation is preferable to annotate concrete classes instead of interfaces -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
+
+    <!-- ############################## MyBatis DAOs ############################## -->
+    <bean id="adminUserDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="net.gmclabs.bringthebackpack.persistence.mappers.AdminUserDao" />
+        <!-- TODO Exception translation is not working -->
+<!--         <property name="sqlSessionTemplate" ref="sqlSessionTemplate" /> -->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="continentDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="net.gmclabs.bringthebackpack.persistence.mappers.ContinentDao" />
+<!--         <property name="sqlSessionTemplate" ref="sqlSessionTemplate" /> -->
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
 </beans>

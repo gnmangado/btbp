@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="net.gmclabs.bringthebackpack.models.AdminUser" alias="AdminUser" />
+        <typeAlias type="net.gmclabs.bringthebackpack.models.Continent" alias="Continent" />
+        <typeAlias type="net.gmclabs.bringthebackpack.models.Image" alias="Image" />
+        <typeAlias type="net.gmclabs.bringthebackpack.models.Video" alias="Video" />
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="mybatis/mappers/mapper_AdminUser.xml" />
+        <mapper resource="mybatis/mappers/mapper_Continent.xml" />
+    </mappers>
+</configuration>
